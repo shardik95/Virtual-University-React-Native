@@ -22,7 +22,6 @@ class Home extends React.Component{
     render(){
         return(
             <View>
-                <StatusBar barStyle="light-content"/>
                 <FixedHeader/>
                 <Button title="Course List" onPress={()=>this.props.navigation.navigate("CourseList")}/>
             </View>

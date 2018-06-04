@@ -1,6 +1,6 @@
 import React from 'react';
-import {ListItem} from 'react-native-elements';
-import {View} from 'react-native';
+import {ListItem,Button} from 'react-native-elements';
+import {View,Alert,Text} from 'react-native';
 
 class LessonList extends React.Component{
 
@@ -10,28 +10,31 @@ class LessonList extends React.Component{
         super(props);
         this.state={
             topicId:"",
-            widgets:[]
+            widgets:[],
+            assignments:[]
         }
     }
 
     componentDidMount(){
         let topicId=this.props.navigation.getParam("topicId");
         this.setState({topicId:topicId})
-        fetch("http://localhost:8080/api/topic/"+topicId+"/widget")
+        fetch("http://localhost:8080/api/topic/"+topicId+"/assignment")
             .then(response=>(
                 response.json()
-            )).then(widgets=>(
-            this.setState({widgets:widgets})
+            )).then(assignments=>(
+            this.setState({assignments:assignments})
         ))
+
     }
 
     render(){
         return(
             <View style={{padding: 15}}>
-                {this.state.widgets.map((widget,index)=>(
-                    <ListItem title={widget.widgetName} key={index}
-                    />
+                {this.state.assignments.map( (assignment, index)=>(
+                    <ListItem title={assignment.title} key={index}/>
                 ))}
+                <Text>{'\n'}</Text>
+               <Button title="Add Assignment"/>
             </View>
         )
     }
