@@ -34,7 +34,7 @@ class LessonList extends React.Component{
                     <ListItem title={assignment.title} key={index}/>
                 ))}
                 <Text>{'\n'}</Text>
-               <Button title="Add Assignment"/>
+               <Button title="Add Assignment" onPress={()=>this.props.navigation.navigate("AssignmentWidget")}/>
             </View>
         )
     }
