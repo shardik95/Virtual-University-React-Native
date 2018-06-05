@@ -43,6 +43,16 @@ class AssignmentService{
         })
     }
 
+    updateAssignment(assignmentId,assignment) {
+        return fetch("http://localhost:8080/api/assignment/"+assignmentId, {
+            method: "put",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(assignment)
+        })
+    }
+
 }
 
 export default AssignmentService;

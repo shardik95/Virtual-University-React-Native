@@ -19,15 +19,20 @@ class LessonList extends React.Component{
         this.assignmentService=AssignmentService.instance;
     }
 
+    handleOnNavigateBack = () => {
+        this.assignmentService.findAssignmentsForTopic(this.state.topicId).then(assignments=> (
+            this.setState({assignments: assignments})
+        ))
+    }
+
     componentDidMount(){
         let topicId=this.props.navigation.getParam("topicId");
         this.setState({topicId:topicId})
         this.assignmentService.findAssignmentsForTopic(topicId).then(assignments=> (
             this.setState({assignments: assignments})
         ))
-
     }
-    
+
 
     deleteAssignment(assignmentId){
         this.assignmentService.deleteAssignment(assignmentId)
@@ -49,11 +54,9 @@ class LessonList extends React.Component{
 
         return this.assignmentService.addAssignment(this.state.topicId,newAssignment)
             .then(response => (response.json()))
-            .then(()=>(
-            fetch("http://localhost:8080/api/topic/"+this.state.topicId+"/assignment")
-                .then(response=>(
-                    response.json()
-                )).then(assignments=>(
+            .then(()=>(fetch("http://localhost:8080/api/topic/"+this.state.topicId+"/assignment")
+                .then(response=>(response.json()))
+                .then(assignments=>(
                 this.setState({assignments:assignments})
             ))
         ))
@@ -65,7 +68,8 @@ class LessonList extends React.Component{
                 {this.state.assignments.map( (assignment, index)=>(
                     <ListItem title={assignment.title} key={index}
                     onPress={()=>(
-                        this.props.navigation.navigate("AssignmentWidget",{assignmentId:assignment.id})
+                        this.props.navigation.navigate("AssignmentWidget",{assignmentId:assignment.id
+                        ,onNavigateBack: this.handleOnNavigateBack})
                     )}
                     rightIcon={<Icon name={'delete'} size={20}
                                      onPress={() => this.deleteAssignment(assignment.id)} />}
