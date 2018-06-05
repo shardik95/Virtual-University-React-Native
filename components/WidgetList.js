@@ -1,7 +1,8 @@
 import React from 'react';
-import {ListItem,Button,Icon} from 'react-native-elements';
-import {View,Alert,Text} from 'react-native';
+import {ListItem,Button,Icon,Text} from 'react-native-elements';
+import {View,Alert} from 'react-native';
 import AssignmentService from "../services/AssignmentService";
+import ExamService from "../services/ExamService";
 
 class LessonList extends React.Component{
 
@@ -12,17 +13,22 @@ class LessonList extends React.Component{
         this.state={
             topicId:"",
             widgets:[],
-            assignments:[]
+            assignments:[],
+            exams:[]
         }
         this.addAssignment=this.addAssignment.bind(this);
         this.deleteAssignment=this.deleteAssignment.bind(this);
+        this.addExam=this.addExam.bind(this);
+        this.deleteExam=this.deleteExam.bind(this);
         this.assignmentService=AssignmentService.instance;
+        this.examService=ExamService.instance;
     }
 
     handleOnNavigateBack = () => {
         this.assignmentService.findAssignmentsForTopic(this.state.topicId).then(assignments=> (
             this.setState({assignments: assignments})
         ))
+
     }
 
     componentDidMount(){
@@ -30,6 +36,9 @@ class LessonList extends React.Component{
         this.setState({topicId:topicId})
         this.assignmentService.findAssignmentsForTopic(topicId).then(assignments=> (
             this.setState({assignments: assignments})
+        ))
+        this.examService.findExamForTopicId(topicId).then(exams=>(
+            this.setState({exams:exams})
         ))
     }
 
@@ -62,9 +71,41 @@ class LessonList extends React.Component{
         ))
     }
 
+    deleteExam(examId){
+        fetch("http://localhost:8080/api/exam/"+examId,{
+            method:'delete'
+        })
+        return fetch("http://localhost:8080/api/topic/"+this.state.topicId+"/exam")
+            .then(response=>(
+                response.json()
+            )).then(exams=> (
+            this.setState({exams: exams})
+        ))
+    }
+
+    addExam(){
+
+        let newExam={
+            title:"New Exam",
+            text:"New Exam",
+            widgetType:"Exam"
+        }
+
+        return this.examService.addExam(this.state.topicId,newExam)
+            .then(response => (response.json()))
+            .then(()=>(fetch("http://localhost:8080/api/topic/"+this.state.topicId+"/exam")
+                    .then(response=>(response.json()))
+                    .then(exams=>(
+                        this.setState({exams:exams})
+                    ))
+            ))
+
+    }
+
     render(){
         return(
             <View style={{padding: 15}}>
+                <Text h3>Assignments</Text>
                 {this.state.assignments.map( (assignment, index)=>(
                     <ListItem title={assignment.title} key={index}
                     onPress={()=>(
@@ -77,6 +118,20 @@ class LessonList extends React.Component{
                 ))}
                 <Text>{'\n'}</Text>
                <Button title="Add Assignment" onPress={()=>this.addAssignment()}/>
+                <Text>{'\n'}</Text>
+                <Text h3>Exams</Text>
+                {console.log(this.state.exams)}
+                {this.state.exams.map( (exam, index)=>(
+                    <ListItem title={exam.title} key={index}
+                              onPress={()=>this.props.navigation.navigate("ExamWidget",{
+                                  examId:exam.id
+                              })}
+                              rightIcon={<Icon name={'delete'} size={20}
+                                               onPress={()=>this.deleteExam(exam.id)}/>}
+                    />
+                ))}
+                <Text>{'\n'}</Text>
+                <Button title="Add Exam" onPress={()=>this.addExam()} />
             </View>
         )
     }
