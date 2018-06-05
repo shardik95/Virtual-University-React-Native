@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text,FormInput,FormLabel,FormValidationMessage,Button} from 'react-native-elements';
-import {View} from 'react-native';
+import {View,TextInput} from 'react-native';
+import AssignmentService from "../services/AssignmentService";
 
 class AssignmentWidget extends React.Component{
 
@@ -15,8 +16,18 @@ class AssignmentWidget extends React.Component{
             title:"",
             description:"",
             points:"",
+            assignment:""
         }
+        this.assignmentService=AssignmentService.instance;
+    }
 
+    componentDidMount(){
+        let assignmentId=this.props.navigation.getParam('assignmentId',1)
+        this.assignmentService.findAssignmentById(assignmentId)
+            .then(assignment=>(
+                this.setState({assignment:assignment,title:assignment.title
+                        ,description:assignment.description,points:assignment.points})
+            ))
     }
 
     formUpdate(newState){
@@ -25,21 +36,24 @@ class AssignmentWidget extends React.Component{
 
     render(){
         return(
-            <View>
+            <View style={{padding: 15}}>
+
                 <FormLabel>Title</FormLabel>
-                <FormInput onChangeText={text=>(
+                <TextInput onChangeText={text=>(
                     this.formUpdate({title:text})
-                )}/>
+                )} value={this.state.assignment.title}
+                           style={{height: 40, borderColor: 'gray', borderWidth: 1,paddingLeft:10}}/>
                 {this.state.title==="" && <FormValidationMessage>Title is required</FormValidationMessage>}
                 <FormLabel>Description</FormLabel>
-                <FormInput  onChangeText={text=>(
+                <TextInput  onChangeText={text=>(
                     this.formUpdate({description:text})
-                )}/>
+                )} value={this.state.assignment.description}
+                            style={{height: 40, borderColor: 'gray', borderWidth: 1,paddingLeft:10}}/>
                 {this.state.description==="" && <FormValidationMessage>Description is required</FormValidationMessage>}
                 <FormLabel>Points</FormLabel>
-                <FormInput  onChangeText={text=>(
+                <FormInput onChangeText={text=>(
                     this.formUpdate({points:text})
-                )}/>
+                )} />
                 {this.state.points==="" &&<FormValidationMessage>Points are required</FormValidationMessage>}
                 <Text>{'\n'}</Text>
                 <Button title="Save" backgroundColor="green"
@@ -47,7 +61,6 @@ class AssignmentWidget extends React.Component{
                 <Text>{'\n'}</Text>
                 <Button title="Cancel" backgroundColor="red"
                         color="white"/>
-                <Text h1>{this.state.title} - {this.state.description} - {this.state.points}</Text>
             </View>
         )
     }
