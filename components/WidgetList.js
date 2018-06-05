@@ -120,7 +120,6 @@ class LessonList extends React.Component{
                <Button title="Add Assignment" onPress={()=>this.addAssignment()}/>
                 <Text>{'\n'}</Text>
                 <Text h3>Exams</Text>
-                {console.log(this.state.exams)}
                 {this.state.exams.map( (exam, index)=>(
                     <ListItem title={exam.title} key={index}
                               onPress={()=>this.props.navigation.navigate("ExamWidget",{
