@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,Button} from 'react-native-elements';
+import {Text,Button,ListItem} from 'react-native-elements';
 import {View,Picker} from 'react-native';
 import QuestionService from "../services/QuestionService";
 
@@ -16,6 +16,7 @@ class ExamWidget extends React.Component{
             questions:[],
             visiblePicker:false,
             questionType:0,
+            questions:[]
         }
         this.questionService=QuestionService.instance;
         this.addQuestion=this.addQuestion.bind(this);
@@ -24,17 +25,22 @@ class ExamWidget extends React.Component{
     componentDidMount(){
         let examId=this.props.navigation.getParam("examId",1);
         this.setState({examId:examId});
-
+        this.questionService.findQuestionsByExamId(examId)
+            .then(questions=>this.setState({questions:questions}))
     }
 
     addQuestion(questionType){
-        console.log(questionType)
+        this.questionService.addQuestion(questionType,this.state.examId)
     }
 
     render(){
         return(
             <View style={{padding:15}}>
                 <Text h3>Questions</Text>
+                {this.state.questions.map((question,index)=>(
+                    <ListItem title={question.title} subtitle={question.subtitle}
+                    key={index}/>
+                ))}
                 <Picker onValueChange={(itemValue)=>{
                     this.setState({questionType: itemValue})
                 }} selectedValue={this.state.questionType}>
