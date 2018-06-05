@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,StatusBar } from 'react-native';
+import { StyleSheet, Text, ScrollView,StatusBar } from 'react-native';
 import {Button} from 'react-native-elements';
 import {FixedHeader} from "./elements/FixedHeader";
 import {createStackNavigator} from 'react-navigation';
@@ -22,10 +22,10 @@ class Home extends React.Component{
 
     render(){
         return(
-            <View>
+            <ScrollView>
                 <FixedHeader/>
                 <Button title="Course List" onPress={()=>this.props.navigation.navigate("CourseList")}/>
-            </View>
+            </ScrollView>
         )
     }
 

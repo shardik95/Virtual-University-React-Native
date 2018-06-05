@@ -1,7 +1,8 @@
 import React from 'react';
 import {Text,FormInput,FormLabel,FormValidationMessage,Button} from 'react-native-elements';
-import {View,TextInput,Alert} from 'react-native';
+import {ScrollView,View,TextInput,Alert} from 'react-native';
 import AssignmentService from "../services/AssignmentService";
+import Hyperlink from 'react-native-hyperlink'
 
 class AssignmentWidget extends React.Component{
 
@@ -53,9 +54,9 @@ class AssignmentWidget extends React.Component{
 
     render(){
         return(
-            <View style={{padding: 15}}>
+            <ScrollView style={{padding: 15}}>
                 {this.state.previewMode &&
-                    <View>
+                    <ScrollView>
                         <FormLabel>Title</FormLabel>
                         <FormInput onChangeText={text=>(
                             this.formUpdate({title:text})
@@ -84,16 +85,33 @@ class AssignmentWidget extends React.Component{
                                 color="white" onPress={()=>{
                             this.setState({previewMode:!this.state.previewMode})
                         }}/>
-                    </View>}
+                    </ScrollView>}
 
 
                 {!this.state.previewMode &&
-                     <Button title="EditMode" backgroundColor="blue"
-                            color="white" onPress={()=>{
-                        this.setState({previewMode:!this.state.previewMode})
-                    }}/>}
+                    <View>
+                        <Text h3>{this.state.title}</Text>
+                        <Text>{'\n'}</Text>
+                        <Text h4>Description:</Text>
+                        <Text>{this.state.description}</Text>
+                        <Text>{'\n'}</Text>
+                        <Text h4>Points - {this.state.points}</Text>
+                        <Text>{'\n'}</Text>
+                        <Text h4>Essay Answer</Text>
+                        <TextInput style={{height: 140, borderColor: 'gray', borderWidth: 1}} />
+                        <Text>{'\n'}</Text>
+                        <Text h4>Link Upload</Text>
+                        <Hyperlink linkDefault={ true }>
+                            <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}} />
+                        </Hyperlink>
+                        <Text>{'\n'}</Text>
+                         <Button title="EditMode" backgroundColor="blue"
+                                color="white" onPress={()=>{
+                            this.setState({previewMode:!this.state.previewMode})
+                         }}/>
+                    </View>}
 
-            </View>
+            </ScrollView>
         )
     }
 
