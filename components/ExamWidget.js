@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text,Button,ListItem} from 'react-native-elements';
-import {View,Picker} from 'react-native';
+import {View,Picker,ScrollView} from 'react-native';
 import QuestionService from "../services/QuestionService";
 
 class ExamWidget extends React.Component{
@@ -31,16 +31,31 @@ class ExamWidget extends React.Component{
 
     addQuestion(questionType){
         this.questionService.addQuestion(questionType,this.state.examId)
+            .then(()=>this.questionService.findQuestionsByExamId(this.state.examId))
+            .then(questions=>this.setState({questions:questions}))
+
     }
 
     render(){
         return(
-            <View style={{padding:15}}>
+            <ScrollView style={{padding:15}}>
                 <Text h3>Questions</Text>
-                {this.state.questions.map((question,index)=>(
-                    <ListItem title={question.title} subtitle={question.subtitle}
-                    key={index}/>
-                ))}
+                {this.state.questions.map((question)=> {
+
+                    return(
+                        <View key={question.id}>
+                            {question.questionType === 'FB' &&
+                        <ListItem title={question.title} subtitle={question.subtitle}
+                                  key={question.id} leftIcon={{name: 'code'}}/>}
+                            {question.questionType === 'TF' &&
+                        <ListItem title={question.title} subtitle={question.subtitle}
+                                  key={question.id} leftIcon={{name: 'check'}}/>}
+                        </View>
+                    )
+
+
+
+                })}
                 <Picker onValueChange={(itemValue)=>{
                     this.setState({questionType: itemValue})
                 }} selectedValue={this.state.questionType}>
@@ -53,7 +68,7 @@ class ExamWidget extends React.Component{
                 <Button title="Add Question" onPress={()=>{
                     this.addQuestion(this.state.questionType)
                 }}/>
-            </View>
+            </ScrollView>
         )
     }
 }

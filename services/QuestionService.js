@@ -1,4 +1,5 @@
 import FillInTheBlankService from "./FillInTheBlankService";
+import TrueOrFalseService from "./TrueOrFalseService";
 
 let _singleton=Symbol();
 
@@ -8,6 +9,7 @@ class QuestionService{
             throw new Error('Cannot instantiate directly.');
 
         this.fillInTheBlankService=FillInTheBlankService.instance;
+        this.trueFalseService=TrueOrFalseService.instance;
 
     }
     static get instance() {
@@ -19,6 +21,9 @@ class QuestionService{
     addQuestion(questionType,examId){
         if(questionType==='FB'){
             return this.fillInTheBlankService.addQuestion(examId)
+        }
+        else if(questionType==='TF'){
+            return this.trueFalseService.addQuestion(examId)
         }
     }
 
