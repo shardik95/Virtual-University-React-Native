@@ -17,8 +17,8 @@ class MultipleChoiceService{
             points:'0',
             subtitle:'Multiple Choice',
             questionType:'MC',
-            options:'1. Option 1\n2. Option 2\n3. Option 3\n4. Option 4',
-            correctOption:'1. Option 1'
+            options:'option-1#option-2',
+            correctOption:'1'
         }
 
         return fetch("http://localhost:8080/api/exam/"+examId+"/choice",{
@@ -27,6 +27,16 @@ class MultipleChoiceService{
                 'content-type':'application/json'
             },
             body:JSON.stringify(newQuestion)
+        })
+    }
+
+    updateQuestion(questionId,question){
+        return fetch("http://localhost:8080/api/question/"+questionId+"/choice", {
+            method: "put",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(question)
         })
     }
 
