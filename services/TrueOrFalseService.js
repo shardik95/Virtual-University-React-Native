@@ -16,7 +16,7 @@ class TrueOrFalseService{
             description:'Enter Description',
             points:'0',
             subtitle:'true false',
-            isTrue:'true',
+            isTrue:false,
             questionType:'TF'
         }
 
@@ -26,6 +26,16 @@ class TrueOrFalseService{
                 'content-type':'application/json'
             },
             body:JSON.stringify(newQuestion)
+        })
+    }
+
+    updateQuestion(questionId,question){
+        return fetch("http://localhost:8080/api/question/"+questionId+"/truefalse", {
+            method: "put",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(question)
         })
     }
 

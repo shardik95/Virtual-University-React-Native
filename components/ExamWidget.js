@@ -62,7 +62,7 @@ class ExamWidget extends React.Component{
                         <ListItem title={question.title} subtitle={question.subtitle}
                                   key={question.id} leftIcon={{name: 'check'}}
                                   onPress={()=>this.props.navigation.navigate("TrueFalseWidget",{
-                                      question:question
+                                      question:question,onNavigateBack: this.handleOnNavigateBack
                                   })}/>}
                             {question.questionType === 'ES' &&
                             <ListItem title={question.title} subtitle={question.subtitle}
