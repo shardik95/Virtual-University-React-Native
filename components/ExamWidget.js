@@ -56,7 +56,7 @@ class ExamWidget extends React.Component{
                         <ListItem title={question.title} subtitle={question.subtitle}
                                   key={question.id} leftIcon={{name: 'code'}}
                         onPress={()=>this.props.navigation.navigate("FillInTheBlankWidget",{
-                            question:question
+                            question:question,onNavigateBack: this.handleOnNavigateBack
                         })}/>}
                             {question.questionType === 'TF' &&
                         <ListItem title={question.title} subtitle={question.subtitle}

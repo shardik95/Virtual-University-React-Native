@@ -18,7 +18,9 @@ class FillInTheBlankService {
             points:'0',
             subtitle:'fill in the blanks',
             variables:'v',
-            questionType:'FB'
+            questionType:'FB',
+            fib:'2 + 2 = [four=4]\n' +
+            '[two=2] + 2 = 4\n'
         }
 
         return fetch("http://localhost:8080/api/exam/"+examId+"/blanks",{
@@ -29,6 +31,16 @@ class FillInTheBlankService {
             body:JSON.stringify(newQuestion)
         })
 
+    }
+
+    updateQuestion(questionId,question){
+        return fetch("http://localhost:8080/api/question/"+questionId+"/blanks", {
+            method: "put",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(question)
+        })
     }
 }
 
