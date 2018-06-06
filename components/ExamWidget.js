@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,Button,ListItem} from 'react-native-elements';
+import {Text,Button,ListItem,Icon} from 'react-native-elements';
 import {View,Picker,ScrollView} from 'react-native';
 import QuestionService from "../services/QuestionService";
 
@@ -21,6 +21,7 @@ class ExamWidget extends React.Component{
         }
         this.questionService=QuestionService.instance;
         this.addQuestion=this.addQuestion.bind(this);
+        this.deleteQuestion=this.deleteQuestion.bind(this);
     }
 
     handleOnNavigateBack = () => {
@@ -43,6 +44,12 @@ class ExamWidget extends React.Component{
 
     }
 
+    deleteQuestion(questionId){
+        this.questionService.deleteQuestion(questionId)
+        this.questionService.findQuestionsByExamId(this.state.examId)
+            .then(questions=>this.setState({questions:questions}))
+    }
+
     render(){
         return(
             <ScrollView style={{padding:15}}>
@@ -51,32 +58,77 @@ class ExamWidget extends React.Component{
                 {this.state.questions.map((question)=> {
 
                     return(
-                        <View key={question.id}>
-                            {question.questionType === 'FB' &&
-                        <ListItem title={question.title} subtitle={question.subtitle}
-                                  key={question.id} leftIcon={{name: 'code'}}
-                        onPress={()=>this.props.navigation.navigate("FillInTheBlankWidget",{
-                            question:question,onNavigateBack: this.handleOnNavigateBack
-                        })}/>}
-                            {question.questionType === 'TF' &&
-                        <ListItem title={question.title} subtitle={question.subtitle}
-                                  key={question.id} leftIcon={{name: 'check'}}
-                                  onPress={()=>this.props.navigation.navigate("TrueFalseWidget",{
-                                      question:question,onNavigateBack: this.handleOnNavigateBack
-                                  })}/>}
-                            {question.questionType === 'ES' &&
-                            <ListItem title={question.title} subtitle={question.subtitle}
-                                      key={question.id} leftIcon={{name: 'subject'}}
-                                      onPress={()=>this.props.navigation.navigate("EssayWidget",{
-                                          question:question,onNavigateBack: this.handleOnNavigateBack
-                                      })}
-                            />}
-                            {question.questionType === 'MC' &&
-                            <ListItem title={question.title} subtitle={question.subtitle}
-                                      key={question.id} leftIcon={{name: 'list'}}
-                                      onPress={()=>this.props.navigation.navigate("MultipleChoiceWidget",{
-                                          question:question,onNavigateBack: this.handleOnNavigateBack
-                                      })}/>}
+                        <View key={question.id} >
+
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                            }}>
+                                <View style={{flex: 5}}>
+                                        {question.questionType === 'FB' &&
+                                    <ListItem title={question.title} subtitle={question.subtitle}
+                                              key={question.id} leftIcon={{name: 'code'}}
+                                    onPress={()=>this.props.navigation.navigate("FillInTheBlankWidget",{
+                                        question:question,onNavigateBack: this.handleOnNavigateBack
+                                    })}/>}
+                                </View>
+                                <View style={{flex: 1,paddingTop:5}}>
+                                    {question.questionType === 'FB' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                </View>
+                            </View>
+
+
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                            }}>
+                                <View style={{flex: 5}}>
+                                        {question.questionType === 'TF' &&
+                                    <ListItem title={question.title} subtitle={question.subtitle}
+                                              key={question.id} leftIcon={{name: 'check'}}
+                                              onPress={()=>this.props.navigation.navigate("TrueFalseWidget",{
+                                                  question:question,onNavigateBack: this.handleOnNavigateBack
+                                              })}/>}
+                                </View>
+                                <View style={{flex: 1,paddingTop:5}}>
+                                    {question.questionType === 'TF' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                </View>
+                            </View>
+
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                            }}>
+                                <View style={{flex: 5}}>
+                                    {question.questionType === 'ES' &&
+                                    <ListItem title={question.title} subtitle={question.subtitle}
+                                              key={question.id} leftIcon={{name: 'subject'}}
+                                              onPress={()=>this.props.navigation.navigate("EssayWidget",{
+                                                  question:question,onNavigateBack: this.handleOnNavigateBack
+                                              })}/>}
+                                </View>
+                                <View style={{flex: 1,paddingTop:5}}>
+                                    {question.questionType === 'ES' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                </View>
+                            </View>
+
+
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                            }}>
+                                <View style={{flex: 5}}>
+                                {question.questionType === 'MC' &&
+                                    <ListItem title={question.title} subtitle={question.subtitle}
+                                              key={question.id} leftIcon={{name: 'list'}}
+                                              onPress={()=>this.props.navigation.navigate("MultipleChoiceWidget",{
+                                                  question:question,onNavigateBack: this.handleOnNavigateBack
+                                              })}/>}
+                                </View>
+                                <View style={{flex: 1,paddingTop:5}}>
+                                    {question.questionType === 'MC' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                </View>
+                            </View>
                         </View>
                     )
 

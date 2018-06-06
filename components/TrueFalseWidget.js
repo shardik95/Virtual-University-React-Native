@@ -19,7 +19,7 @@ class TrueFalseWidget extends React.Component{
             description:"",
             points:"",
             subtitle:"",
-            isTrue:true,
+            isTrue:'1',
             previewMode:true,
             radio_props : [
                 {label: 'True', value: 1 },
@@ -67,7 +67,7 @@ class TrueFalseWidget extends React.Component{
 
     render(){
         return(
-            <ScrollView style={{padding: 15}}>
+            <ScrollView style={{padding: 15}} >
                 {this.state.previewMode &&<ScrollView>
 
                     <FormLabel>Title</FormLabel>
@@ -94,8 +94,8 @@ class TrueFalseWidget extends React.Component{
                     )} value={this.state.points.toString()}/>
                     {this.state.points==="" &&<FormValidationMessage>Points are required</FormValidationMessage>}
 
-                    <CheckBox onPress={() => this.formUpdate({isTrue: !this.state.isTrue})}
-                              checked={this.state.isTrue} title='The answer is true'/>
+                    <CheckBox onPress={() => this.formUpdate(this.state.isTrue==='1'? {isTrue:'0'} : {isTrue:'1'} )}
+                              checked={this.state.isTrue=='1'} title='The answer is true'/>
 
                     <Text>{'\n'}</Text>
                     <Button title="Save" backgroundColor="green"

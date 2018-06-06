@@ -44,6 +44,12 @@ class QuestionService{
             ))
     }
 
+    deleteQuestion(questionId){
+        fetch("http://localhost:8080/api/question/"+questionId,{
+            method:'delete'
+        })
+    }
+
 }
 
 export default QuestionService;

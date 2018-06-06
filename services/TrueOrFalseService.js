@@ -16,7 +16,7 @@ class TrueOrFalseService{
             description:'Enter Description',
             points:'0',
             subtitle:'true false',
-            isTrue:false,
+            isTrue:'1',
             questionType:'TF'
         }
 

@@ -130,7 +130,7 @@ class MultipleChoiceWidget extends React.Component{
                             {str!=='' &&<CheckBox title={str} key={index}
                                                   onPress={() => this.formUpdate({correctOption: index})}
                             checked={this.state.correctOption==(index)}/>}
-                            {str!=='' &&<Icon name={'delete'} size={20} onPress={()=>this.deleteOption(str)}/>}
+                            {str!=='' &&<Icon name={'delete'} onPress={()=>this.deleteOption(str)}/>}
                         </View>
                     ))}
 
@@ -179,7 +179,7 @@ class MultipleChoiceWidget extends React.Component{
                                                   checked={this.state.correctOption==(index)}/>}
                         </View>
                     ))}
-                    
+
                     <Text>{'\n'}</Text>
                     <Button title="Submit" backgroundColor="blue" color="white"/>
                     <Button title="Cancel" backgroundColor="red" color="white"/>
