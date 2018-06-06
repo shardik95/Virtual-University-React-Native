@@ -16,7 +16,8 @@ class ExamWidget extends React.Component{
             questions:[],
             visiblePicker:false,
             questionType:0,
-            questions:[]
+            questions:[],
+            exam:''
         }
         this.questionService=QuestionService.instance;
         this.addQuestion=this.addQuestion.bind(this);
@@ -24,7 +25,8 @@ class ExamWidget extends React.Component{
 
     componentDidMount(){
         let examId=this.props.navigation.getParam("examId",1);
-        this.setState({examId:examId});
+        let exam=this.props.navigation.getParam("exam",1)
+        this.setState({examId:examId,exam:exam});
         this.questionService.findQuestionsByExamId(examId)
             .then(questions=>this.setState({questions:questions}))
     }
@@ -39,6 +41,7 @@ class ExamWidget extends React.Component{
     render(){
         return(
             <ScrollView style={{padding:15}}>
+                <Text h2>{this.state.exam.title}</Text>
                 <Text h3>Questions</Text>
                 {this.state.questions.map((question)=> {
 
@@ -46,13 +49,29 @@ class ExamWidget extends React.Component{
                         <View key={question.id}>
                             {question.questionType === 'FB' &&
                         <ListItem title={question.title} subtitle={question.subtitle}
-                                  key={question.id} leftIcon={{name: 'code'}}/>}
+                                  key={question.id} leftIcon={{name: 'code'}}
+                        onPress={()=>this.props.navigation.navigate("FillInTheBlankWidget",{
+                            question:question
+                        })}/>}
                             {question.questionType === 'TF' &&
                         <ListItem title={question.title} subtitle={question.subtitle}
-                                  key={question.id} leftIcon={{name: 'check'}}/>}
+                                  key={question.id} leftIcon={{name: 'check'}}
+                                  onPress={()=>this.props.navigation.navigate("TrueFalseWidget",{
+                                      question:question
+                                  })}/>}
                             {question.questionType === 'ES' &&
                             <ListItem title={question.title} subtitle={question.subtitle}
-                                      key={question.id} leftIcon={{name: 'subject'}}/>}
+                                      key={question.id} leftIcon={{name: 'subject'}}
+                                      onPress={()=>this.props.navigation.navigate("EssayWidget",{
+                                          question:question
+                                      })}
+                            />}
+                            {question.questionType === 'MC' &&
+                            <ListItem title={question.title} subtitle={question.subtitle}
+                                      key={question.id} leftIcon={{name: 'list'}}
+                                      onPress={()=>this.props.navigation.navigate("MultipleChoiceWidget",{
+                                          question:question
+                                      })}/>}
                         </View>
                     )
 
@@ -71,6 +90,7 @@ class ExamWidget extends React.Component{
                 <Button title="Add Question" onPress={()=>{
                     this.addQuestion(this.state.questionType)
                 }}/>
+                <Text>{'\n'}</Text>
             </ScrollView>
         )
     }

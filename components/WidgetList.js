@@ -123,7 +123,7 @@ class LessonList extends React.Component{
                 {this.state.exams.map( (exam, index)=>(
                     <ListItem title={exam.title} key={index}
                               onPress={()=>this.props.navigation.navigate("ExamWidget",{
-                                  examId:exam.id
+                                  examId:exam.id,exam:exam
                               })}
                               rightIcon={<Icon name={'delete'} size={20}
                                                onPress={()=>this.deleteExam(exam.id)}/>}

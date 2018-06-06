@@ -1,6 +1,7 @@
 import FillInTheBlankService from "./FillInTheBlankService";
 import TrueOrFalseService from "./TrueOrFalseService";
 import EssayService from "./EssayService";
+import MultipleChoiceService from "./MultipleChoiceService";
 
 let _singleton=Symbol();
 
@@ -12,6 +13,7 @@ class QuestionService{
         this.fillInTheBlankService=FillInTheBlankService.instance;
         this.trueFalseService=TrueOrFalseService.instance;
         this.essayService=EssayService.instance;
+        this.mulitpleChoiceService=MultipleChoiceService.instance;
 
     }
     static get instance() {
@@ -29,6 +31,9 @@ class QuestionService{
         }
         else if(questionType==='ES'){
             return this.essayService.addQuestion(examId)
+        }
+        else if(questionType==='MC'){
+            return this.mulitpleChoiceService.addQuestion(examId)
         }
     }
 
