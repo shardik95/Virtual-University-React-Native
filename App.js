@@ -19,7 +19,7 @@ import EssayWidget from "./components/EssayWidget";
 class Home extends React.Component{
 
     static navigationOptions={
-        title:'Home'
+        header:<FixedHeader name="Home"/>
     }
 
     constructor(props){
@@ -29,14 +29,35 @@ class Home extends React.Component{
     render(){
         return(
             <ScrollView>
-                <FixedHeader/>
-                <Button title="Course List" onPress={()=>this.props.navigation.navigate("CourseList")}/>
+                <StatusBar barStyle="light-content"/>
+                <Button icon={{
+                                name: 'book',
+                                size: 25,
+                                color: 'white'
+                            }}
+                         buttonStyle={styles.button}
+                         title="Course List"
+                         onPress={()=>this.props.navigation.navigate("CourseList")}/>
             </ScrollView>
         )
     }
 
 }
 
+export const styles= StyleSheet.create({
+    button:{
+        backgroundColor: "rgba(92, 99,216, 1)",
+        margin:15,
+        height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 5,
+    },
+    fontcolor:{
+      color:'#fff'
+    }
+
+})
 
 const App = createStackNavigator(
     {

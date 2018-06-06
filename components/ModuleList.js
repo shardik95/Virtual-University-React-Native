@@ -1,10 +1,17 @@
 import React from 'react';
 import {Text,ListItem} from 'react-native-elements';
 import {View} from 'react-native';
+import {styles} from "../App";
+import Icon from "react-native-elements/src/icons/Icon";
 
 class ModuleList extends React.Component{
 
-    static navigationOptions={title:"Modules"}
+    static navigationOptions={
+        title:"Modules",
+        headerStyle: { backgroundColor: '#363636' },
+        headerTitleStyle: { color: '#fff' },
+        headerTintColor: 'white'
+    }
 
     constructor(props){
         super(props)
@@ -29,14 +36,23 @@ class ModuleList extends React.Component{
         return(
             <View style={{padding: 15}}>
                 {this.state.modules.map((module,index)=>(
-                    <ListItem
-                        key={index}
-                        title={module.title}
-                        onPress={() => this.props.navigation.navigate("LessonList", {
-                            courseId: this.state.courseId,
-                            moduleId: module.id
-                        })}
-                    />
+                    <View key={index} style={styles.button}>
+                        <ListItem
+                            key={index}
+                            title={module.title}
+                            onPress={() => this.props.navigation.navigate("LessonList", {
+                                courseId: this.state.courseId,
+                                moduleId: module.id
+                            })}
+                            titleStyle={{color:'#fff',paddingLeft:5}} chevronColor="#fff"
+                            leftIcon={<Icon
+                                color='#fff'
+                                name='open-book'
+                                type='entypo'
+                            />
+                            }
+                        />
+                    </View>
                 ))}
             </View>
         )
