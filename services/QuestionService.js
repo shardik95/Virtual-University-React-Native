@@ -1,5 +1,6 @@
 import FillInTheBlankService from "./FillInTheBlankService";
 import TrueOrFalseService from "./TrueOrFalseService";
+import EssayService from "./EssayService";
 
 let _singleton=Symbol();
 
@@ -10,6 +11,7 @@ class QuestionService{
 
         this.fillInTheBlankService=FillInTheBlankService.instance;
         this.trueFalseService=TrueOrFalseService.instance;
+        this.essayService=EssayService.instance;
 
     }
     static get instance() {
@@ -24,6 +26,9 @@ class QuestionService{
         }
         else if(questionType==='TF'){
             return this.trueFalseService.addQuestion(examId)
+        }
+        else if(questionType==='ES'){
+            return this.essayService.addQuestion(examId)
         }
     }
 

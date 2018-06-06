@@ -50,6 +50,9 @@ class ExamWidget extends React.Component{
                             {question.questionType === 'TF' &&
                         <ListItem title={question.title} subtitle={question.subtitle}
                                   key={question.id} leftIcon={{name: 'check'}}/>}
+                            {question.questionType === 'ES' &&
+                            <ListItem title={question.title} subtitle={question.subtitle}
+                                      key={question.id} leftIcon={{name: 'subject'}}/>}
                         </View>
                     )
 
