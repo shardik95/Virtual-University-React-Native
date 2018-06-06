@@ -23,6 +23,11 @@ class ExamWidget extends React.Component{
         this.addQuestion=this.addQuestion.bind(this);
     }
 
+    handleOnNavigateBack = () => {
+        this.questionService.findQuestionsByExamId(this.state.examId)
+            .then(questions=>this.setState({questions:questions}))
+    }
+
     componentDidMount(){
         let examId=this.props.navigation.getParam("examId",1);
         let exam=this.props.navigation.getParam("exam",1)
@@ -63,7 +68,7 @@ class ExamWidget extends React.Component{
                             <ListItem title={question.title} subtitle={question.subtitle}
                                       key={question.id} leftIcon={{name: 'subject'}}
                                       onPress={()=>this.props.navigation.navigate("EssayWidget",{
-                                          question:question
+                                          question:question,onNavigateBack: this.handleOnNavigateBack
                                       })}
                             />}
                             {question.questionType === 'MC' &&

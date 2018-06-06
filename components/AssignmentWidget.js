@@ -105,6 +105,9 @@ class AssignmentWidget extends React.Component{
                             <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}} />
                         </Hyperlink>
                         <Text>{'\n'}</Text>
+                        <Button title="Submit" backgroundColor="blue" color="white"/>
+                        <Button title="Cancel" backgroundColor="red" color="white"/>
+                        <Text>{'\n'}</Text>
                          <Button title="EditMode" backgroundColor="blue"
                                 color="white" onPress={()=>{
                             this.setState({previewMode:!this.state.previewMode})

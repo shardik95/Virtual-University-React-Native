@@ -28,6 +28,16 @@ class EssayService{
         })
     }
 
+    updateQuestion(questionId,question){
+        return fetch("http://localhost:8080/api/question/"+questionId+"/essay", {
+            method: "put",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(question)
+        })
+    }
+
 }
 
 export default EssayService;
