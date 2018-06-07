@@ -2,11 +2,15 @@ import React from 'react';
 import {Text,Button,ListItem,Icon} from 'react-native-elements';
 import {View,Picker,ScrollView} from 'react-native';
 import QuestionService from "../services/QuestionService";
+import {styles} from "../App";
 
 class ExamWidget extends React.Component{
 
     static navigationOptions={
-        title:"Exam"
+        title:"Exam",
+        headerStyle: { backgroundColor: '#363636' },
+        headerTitleStyle: { color: '#fff' },
+        headerTintColor: 'white'
     }
 
     constructor(props){
@@ -52,87 +56,107 @@ class ExamWidget extends React.Component{
 
     render(){
         return(
-            <ScrollView style={{padding:15}}>
-                <Text h2>{this.state.exam.title}</Text>
-                <Text h3>Questions</Text>
+            <ScrollView>
+                <View style={{flex: 1, flexDirection: 'row',backgroundColor:'grey',padding:10,marginBottom:5}}>
+                    <View style={{flex: 6}}>
+                        <Text h3 style={{color:"#fff"}}>{this.state.exam.title}</Text>
+                    </View>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row',backgroundColor:'grey',padding:10,marginBottom:5}}>
+                    <View style={{flex: 6}}>
+                        <Text h5 style={{color:"#fff"}}>Questions</Text>
+                    </View>
+                </View>
                 {this.state.questions.map((question)=> {
-
                     return(
                         <View key={question.id} >
 
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                            }}>
+                            {question.questionType === 'FB'&&<View style={{flex: 1, flexDirection: 'row'}}>
                                 <View style={{flex: 5}}>
-                                        {question.questionType === 'FB' &&
-                                    <ListItem title={question.title} subtitle={question.subtitle}
-                                              key={question.id} leftIcon={{name: 'code'}}
-                                    onPress={()=>this.props.navigation.navigate("FillInTheBlankWidget",{
-                                        question:question,onNavigateBack: this.handleOnNavigateBack
-                                    })}/>}
+                                    <View style={styles.button1}>
+                                            {question.questionType === 'FB' &&
+                                        <ListItem title={question.title} subtitle={question.subtitle}
+                                                  key={question.id} leftIcon={<Icon
+                                            color='#fff'
+                                            name='code'
+                                            type='entypo'
+                                        />} titleStyle={{color:'#fff',padding:5}} chevronColor="#fff"
+                                                  subtitleStyle={{color:'#fff',padding:5}}
+                                        onPress={()=>this.props.navigation.navigate("FillInTheBlankWidget",{
+                                            question:question,onNavigateBack: this.handleOnNavigateBack
+                                        })}/>}
+                                    </View>
                                 </View>
-                                <View style={{flex: 1,paddingTop:5}}>
-                                    {question.questionType === 'FB' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                <View style={{flex: 1,marginTop:30}}>
+                                    {question.questionType === 'FB' && <Icon name={'delete'}  color='grey' onPress={()=>this.deleteQuestion(question.id)} />}
                                 </View>
-                            </View>
+                            </View>}
 
 
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                            }}>
-                                <View style={{flex: 5}}>
+                            {question.questionType === 'TF' &&<View style={{flex: 1, flexDirection: 'row',}}>
+                               <View style={{flex: 5}}>
+                                    <View style={styles.button1}>
                                         {question.questionType === 'TF' &&
-                                    <ListItem title={question.title} subtitle={question.subtitle}
-                                              key={question.id} leftIcon={{name: 'check'}}
-                                              onPress={()=>this.props.navigation.navigate("TrueFalseWidget",{
-                                                  question:question,onNavigateBack: this.handleOnNavigateBack
-                                              })}/>}
+                                        <ListItem title={question.title} subtitle={question.subtitle}
+                                                  key={question.id} leftIcon={<Icon
+                                            color='#fff'
+                                            name='check'
+                                            type='entypo'
+                                        />} titleStyle={{color:'#fff',padding:5}} chevronColor="#fff"
+                                                  subtitleStyle={{color:'#fff',padding:5}}
+                                                  onPress={()=>this.props.navigation.navigate("TrueFalseWidget",{
+                                                      question:question,onNavigateBack: this.handleOnNavigateBack
+                                                  })}/>}
+                                    </View>
                                 </View>
-                                <View style={{flex: 1,paddingTop:5}}>
-                                    {question.questionType === 'TF' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                <View style={{flex: 1,marginTop:30}}>
+                                    {question.questionType === 'TF' && <Icon name={'delete'}  color='grey' style={{padding:5}} onPress={()=>this.deleteQuestion(question.id)} />}
                                 </View>
-                            </View>
+                            </View>}
 
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                            }}>
+                            {question.questionType === 'ES'&&<View style={{flex: 1, flexDirection: 'row',}}>
                                 <View style={{flex: 5}}>
-                                    {question.questionType === 'ES' &&
-                                    <ListItem title={question.title} subtitle={question.subtitle}
-                                              key={question.id} leftIcon={{name: 'subject'}}
-                                              onPress={()=>this.props.navigation.navigate("EssayWidget",{
-                                                  question:question,onNavigateBack: this.handleOnNavigateBack
-                                              })}/>}
+                                    <View style={styles.button1}>
+                                        {question.questionType === 'ES' &&
+                                        <ListItem title={question.title} subtitle={question.subtitle}
+                                                  key={question.id} leftIcon={<Icon
+                                            color='#fff'
+                                            name='subject'
+                                            type='materialicon'
+                                        />} titleStyle={{color:'#fff',padding:5}} chevronColor="#fff"
+                                                  subtitleStyle={{color:'#fff',padding:5}}
+                                                  onPress={()=>this.props.navigation.navigate("EssayWidget",{
+                                                      question:question,onNavigateBack: this.handleOnNavigateBack
+                                                  })}/>}
+                                    </View>
                                 </View>
-                                <View style={{flex: 1,paddingTop:5}}>
-                                    {question.questionType === 'ES' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                <View style={{flex: 1,marginTop:30}}>
+                                    {question.questionType === 'ES' && <Icon name={'delete'}  color='grey' style={{padding:5}} onPress={()=>this.deleteQuestion(question.id)} />}
                                 </View>
-                            </View>
+                            </View>}
 
-
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                            }}>
+                            {question.questionType === 'MC' && <View style={{flex: 1, flexDirection: 'row',marginTop:10}}>
                                 <View style={{flex: 5}}>
-                                {question.questionType === 'MC' &&
-                                    <ListItem title={question.title} subtitle={question.subtitle}
-                                              key={question.id} leftIcon={{name: 'list'}}
-                                              onPress={()=>this.props.navigation.navigate("MultipleChoiceWidget",{
-                                                  question:question,onNavigateBack: this.handleOnNavigateBack
-                                              })}/>}
+                                    <View style={styles.button1}>
+                                        {question.questionType === 'MC' &&
+                                        <ListItem title={question.title} subtitle={question.subtitle}
+                                                  key={question.id} leftIcon={<Icon
+                                            color='#fff'
+                                            name='check'
+                                            type='entypo'
+                                        />} titleStyle={{color:'#fff',padding:5}} chevronColor="#fff"
+                                                  subtitleStyle={{color:'#fff',padding:5}}
+                                                  onPress={()=>this.props.navigation.navigate("MultipleChoiceWidget",{
+                                                      question:question,onNavigateBack: this.handleOnNavigateBack
+                                                  })}/>}
+                                    </View>
                                 </View>
-                                <View style={{flex: 1,paddingTop:5}}>
-                                    {question.questionType === 'MC' && <Icon name={'delete'} onPress={()=>this.deleteQuestion(question.id)} />}
+                                <View style={{flex: 1,marginTop:30}}>
+                                    {question.questionType === 'MC' && <Icon name={'delete'}  color='grey'  onPress={()=>this.deleteQuestion(question.id)} />}
                                 </View>
-                            </View>
+                            </View>}
                         </View>
                     )
-
-
 
                 })}
                 <Picker onValueChange={(itemValue)=>{
@@ -143,10 +167,15 @@ class ExamWidget extends React.Component{
                     <Picker.Item value="TF" label="True or false" />
                     <Picker.Item value="FB" label="Fill in the blanks" />
                 </Picker>
-                <Text>{'\n'}</Text>
-                <Button title="Add Question" onPress={()=>{
-                    this.addQuestion(this.state.questionType)
-                }}/>
+                <Icon
+                    color='red'
+                    name='circle-with-plus'
+                    type='entypo'
+                    onPress={()=>{
+                        this.addQuestion(this.state.questionType)
+                    }}
+                    size={40}
+                />
                 <Text>{'\n'}</Text>
             </ScrollView>
         )

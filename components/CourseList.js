@@ -36,6 +36,7 @@ class CourseList extends React.Component{
                     <ListItem  title={course.title} titleStyle={{color:'#fff',paddingLeft:5}} chevronColor="#fff"
                     onPress={()=>this.props.navigation.navigate("ModuleList",{courseId:course.id})}
                                leftIcon={<Icon
+
                                    color='#fff'
                                    name='open-book'
                                    type='entypo'

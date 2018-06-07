@@ -3,10 +3,15 @@ import {ListItem,Button,Icon,Text,FormLabel,FormInput} from 'react-native-elemen
 import {View,Alert,TextInput,ScrollView} from 'react-native';
 import AssignmentService from "../services/AssignmentService";
 import ExamService from "../services/ExamService";
+import {styles} from "../App";
 
 class LessonList extends React.Component{
 
-    static navigationOptions={title:"Widgets"}
+    static navigationOptions={
+        title:"Widgets",
+        headerStyle: { backgroundColor: '#363636' },
+        headerTitleStyle: { color: '#fff' },
+        headerTintColor: 'white'}
 
     constructor(props){
         super(props);
@@ -131,45 +136,80 @@ class LessonList extends React.Component{
 
     render(){
         return(
-            <ScrollView style={{padding: 15}}>
-                <Text h3>Assignments</Text>
+            <ScrollView>
+                <View style={{flex: 1,backgroundColor:'grey',padding:10,marginBottom:5}}>
+                 <Text h3 style={{color:'#fff'}}>Assignments</Text>
+                </View>
                 {this.state.assignments.map( (assignment, index)=>(
-                    <ListItem title={assignment.title} key={index}
-                    onPress={()=>(
-                        this.props.navigation.navigate("AssignmentWidget",{assignmentId:assignment.id
-                        ,onNavigateBack: this.handleOnNavigateBack})
-                    )}
-                    rightIcon={<Icon name={'delete'} size={20}
-                                     onPress={() => this.deleteAssignment(assignment.id)} />}
-                    />
+                    <View key={index} style={styles.button}>
+                        <ListItem title={assignment.title} key={index}
+                        onPress={()=>(
+                            this.props.navigation.navigate("AssignmentWidget",{assignmentId:assignment.id
+                            ,onNavigateBack: this.handleOnNavigateBack})
+                        )}
+                        rightIcon={<Icon name={'delete'} size={20} color="#fff"
+                                         onPress={() => this.deleteAssignment(assignment.id)} />}
+                                  titleStyle={{color:'#fff',paddingLeft:5}} chevronColor="#fff"
+                        />
+                    </View>
                 ))}
-                <FormLabel>Add Assignment</FormLabel>
-                <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}} onChangeText={(text)=>{
-                    this.setState({assignmentTitle:text})
-                }}/>
-                <Text>{'\n'}</Text>
-                <Button title="Add Assignment" onPress={()=>this.addAssignment()}/>
+                <View style={{padding:15,marginBottom:15}}>
+                    <View style={{flex: 1,backgroundColor:'grey',padding:11,marginBottom:2}}>
+                        <TextInput editable={false} style={{color:"#fff"}}>Add Assignment</TextInput>
+                    <View style={{flex:1,flexDirection:'row'}}>
+                        <View style={{flex:5}}>
+                            <TextInput style={{height: 40, borderColor: 'black', borderWidth: 1,backgroundColor:'white'}} onChangeText={(text)=>{
+                                this.setState({assignmentTitle:text})
+                            }} placeholder="Name of Assignment"/>
+                        </View>
+                        <View style={{flex:1,paddingTop:10}}>
+                            <Icon
+                                color='white'
+                                name='add-to-list'
+                                type='entypo'
+                                onPress={()=>this.addAssignment()}
+                            />
+                        </View>
+                    </View>
+                    </View>
+                </View>
 
-
-                <Text>{'\n'}</Text>
-                <Text h3>Exams</Text>
+                <View style={{flex: 1,backgroundColor:'grey',padding:10,marginBottom:5}}>
+                    <Text h3 style={{color:'#fff'}}>Exams</Text>
+                </View>
                 {this.state.exams.map( (exam, index)=>(
-                    <ListItem title={exam.title} key={index}
-                              onPress={()=>this.props.navigation.navigate("ExamWidget",{
-                                  examId:exam.id,exam:exam
-                              })}
-                              rightIcon={<Icon name={'delete'} size={20}
-                                               onPress={()=>this.deleteExam(exam.id)}/>}
-                    />
+                    <View key={index} style={styles.button}>
+                        <ListItem title={exam.title} key={index}
+                                  onPress={()=>this.props.navigation.navigate("ExamWidget",{
+                                      examId:exam.id,exam:exam
+                                  })}
+                                  rightIcon={<Icon name={'delete'} size={20} color="#fff"
+                                                   onPress={() => this.deleteExam(exam.id)} />}
+                                  titleStyle={{color:'#fff',paddingLeft:5}} chevronColor="#fff"
+                        />
+                    </View>
                 ))}
-                <Text>{'\n'}</Text>
-                <FormLabel>Add Exam</FormLabel>
-                <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}} onChangeText={(text)=>{
-                    this.setState({examTitle:text})
-                }}/>
-                <Text>{'\n'}</Text>
-                <Button title="Add Exam" onPress={()=>this.addExam()} />
-                <Text>{'\n'}</Text>
+
+                <View style={{padding:15,marginBottom:15}}>
+                    <View style={{flex: 1,backgroundColor:'grey',padding:11,marginBottom:2}}>
+                        <TextInput editable={false} style={{color:"#fff"}}>Add Exam</TextInput>
+                        <View style={{flex:1,flexDirection:'row'}}>
+                            <View style={{flex:5}}>
+                                <TextInput style={{height: 40, borderColor: 'black', borderWidth: 1,backgroundColor:'white'}} onChangeText={(text)=>{
+                                    this.setState({examTitle:text})
+                                }}/>
+                            </View>
+                            <View style={{flex:1,paddingTop:10}}>
+                                <Icon
+                                    color='white'
+                                    name='add-to-list'
+                                    type='entypo'
+                                    onPress={()=>this.addExam()}
+                                />
+                            </View>
+                        </View>
+                        </View>
+                    </View>
             </ScrollView>
         )
     }

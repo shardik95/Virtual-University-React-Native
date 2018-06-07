@@ -55,7 +55,15 @@ export const styles= StyleSheet.create({
     },
     fontcolor:{
       color:'#fff'
-    }
+    },
+    button1:{
+        backgroundColor: "rgba(92, 99,216, 1)",
+        margin:15,
+        height: 65,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 5,
+    },
 
 })
 
