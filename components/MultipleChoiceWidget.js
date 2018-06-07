@@ -25,7 +25,8 @@ class MultipleChoiceWidget extends React.Component{
             correctOption:'',
             options:[],
             previewMode:true,
-            newOption:''
+            newOption:'',
+            demo:''
         }
         this.updateQuestion=this.updateQuestion.bind(this);
         this.addOption=this.addOption.bind(this);
@@ -243,90 +244,19 @@ class MultipleChoiceWidget extends React.Component{
                     <Text>{'\n'}</Text>
                 </ScrollView>}
 
-                {!this.state.previewMode && <ScrollView>
-                    <View style={{padding: 15, marginBottom: 0}}>
-                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
-                            <TextInput editable={false} style={{color: "#fff"}}>Title</TextInput>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={{flex: 6}}>
-                                    <TextInput style={{
-                                        height: 40,
-                                        borderColor: 'black',
-                                        borderWidth: 1,
-                                        backgroundColor: 'white'
-                                    }} onChangeText={(text) => {
-                                        this.formUpdate({title: text})
-                                    }} value={this.state.question.title}/>
-                                </View>
-                                {this.state.title === "" &&
-                                <FormValidationMessage>Title is required</FormValidationMessage>}
-                            </View>
+                {!this.state.previewMode && <ScrollView style={{padding:5}}>
+                    <View style={{flex: 1, flexDirection: 'row',backgroundColor:'grey',padding:10,marginBottom:5}}>
+                        <View style={{flex: 4}}>
+                            <Text h4 style={{color:"#fff"}}>{this.state.title}</Text>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Text h4 style={{color:"#fff"}}>Points - {this.state.points}</Text>
                         </View>
                     </View>
-
-                    <View style={{padding: 15, marginBottom: 0}}>
-                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
-                            <TextInput editable={false} style={{color: "#fff"}}>Subtitle</TextInput>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={{flex: 6}}>
-                                    <TextInput style={{
-                                        height: 40,
-                                        borderColor: 'black',
-                                        borderWidth: 1,
-                                        backgroundColor: 'white'
-                                    }} onChangeText={(text) => {
-                                        this.formUpdate({subtitle: text})
-                                    }} value={this.state.question.subtitle}/>
-                                </View>
-                                {this.state.subtitle === "" &&
-                                <FormValidationMessage>Subtitle is required</FormValidationMessage>}
-                            </View>
-                        </View>
+                    <View style={{backgroundColor:'grey',padding:10,marginBottom:5}}>
+                        <Text h4 style={{color:"#fff"}}>Description:</Text>
+                        <Text style={{color:"#fff"}}>{this.state.description}</Text>
                     </View>
-
-                    <View style={{padding: 15, marginBottom: 0}}>
-                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
-                            <TextInput editable={false} style={{color: "#fff"}}>Description</TextInput>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={{flex: 6}}>
-                                    <TextInput style={{
-                                        height: 40,
-                                        borderColor: 'black',
-                                        borderWidth: 1,
-                                        backgroundColor: 'white'
-                                    }} onChangeText={(text) => {
-                                        this.formUpdate({description: text})
-                                    }} value={this.state.question.description}/>
-                                </View>
-                                {this.state.description === "" &&
-                                <FormValidationMessage>Description is required</FormValidationMessage>}
-                            </View>
-                        </View>
-                    </View>
-
-                    {no = this.state.question.points}
-                    { no=''+no}
-
-                    <View style={{padding: 15, marginBottom: 0}}>
-                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
-                            <TextInput editable={false} style={{color: "#fff"}}>Points</TextInput>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={{flex: 6}}>
-                                    <TextInput style={{
-                                        height: 40,
-                                        borderColor: 'black',
-                                        borderWidth: 1,
-                                        backgroundColor: 'white'
-                                    }} onChangeText={(text) => {
-                                        this.formUpdate({points: text})
-                                    }} value={no}/>
-                                </View>
-                                {this.state.points === "" &&
-                                <FormValidationMessage>Points are required</FormValidationMessage>}
-                            </View>
-                        </View>
-                    </View>
-
 
                     <View style={{padding: 15, marginBottom: 0}}>
                         <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
@@ -335,14 +265,13 @@ class MultipleChoiceWidget extends React.Component{
                                 {this.state.options.map((str,index)=>(
                                     <View key={index}>
                                         {str!=='' &&<CheckBox title={str} key={index}
-                                                              onPress={() => this.formUpdate({correctOption: index})}
-                                                              checked={this.state.correctOption==(index)}/>}
+                                                              onPress={()=>{this.setState({demo:index})}}
+                                                              checked={this.state.demo==(index)}/>}
                                     </View>
                                 ))}
                             </View>
                         </View>
                     </View>
-
 
 
                     <View style={{flex: 1, flexDirection: 'row'}}>
