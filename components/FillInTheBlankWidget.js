@@ -2,11 +2,15 @@ import React from 'react';
 import {Alert, View,ScrollView,TextInput} from 'react-native';
 import {Text,FormInput,FormLabel,FormValidationMessage,Button} from 'react-native-elements';
 import FillInTheBlankService from "../services/FillInTheBlankService";
+import Icon from "react-native-elements/src/icons/Icon";
 
 class FillInTheBlankWidget extends React.Component{
 
     static navigationOptions={
-        title:'Fill in the Blank Question Editor'
+        title:"Fill in the blank Editor",
+        headerStyle: { backgroundColor: '#363636' },
+        headerTitleStyle: { color: '#fff' },
+        headerTintColor: 'white'
     }
 
     constructor(props){
@@ -79,73 +83,163 @@ class FillInTheBlankWidget extends React.Component{
     }
 
     render(){
+        let no;
         return(
-            <ScrollView style={{padding: 15}}>
+            <ScrollView>
                 {this.state.previewMode &&<ScrollView>
 
-                    <FormLabel>Title</FormLabel>
-                    <FormInput onChangeText={text=>(
-                        this.formUpdate({title:text})
-                    )} value={this.state.question.title}/>
-                    {this.state.title==="" && <FormValidationMessage>Title is required</FormValidationMessage>}
+                    <View style={{padding: 15, marginBottom: 0}}>
+                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
+                            <TextInput editable={false} style={{color: "#fff"}}>Title</TextInput>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={{flex: 6}}>
+                                    <TextInput style={{
+                                        height: 40,
+                                        borderColor: 'black',
+                                        borderWidth: 1,
+                                        backgroundColor: 'white'
+                                    }} onChangeText={(text) => {
+                                        this.formUpdate({title: text})
+                                    }} value={this.state.question.title}/>
+                                </View>
+                                {this.state.title === "" &&
+                                <FormValidationMessage>Title is required</FormValidationMessage>}
+                            </View>
+                        </View>
+                    </View>
 
-                    <FormLabel>Subtitle</FormLabel>
-                    <FormInput onChangeText={text=>(
-                        this.formUpdate({subtitle:text})
-                    )} value={this.state.question.subtitle}/>
-                    {this.state.subtitle==="" && <FormValidationMessage>Subtitle is required</FormValidationMessage>}
+                    <View style={{padding: 15, marginBottom: 0}}>
+                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
+                            <TextInput editable={false} style={{color: "#fff"}}>Subtitle</TextInput>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={{flex: 6}}>
+                                    <TextInput style={{
+                                        height: 40,
+                                        borderColor: 'black',
+                                        borderWidth: 1,
+                                        backgroundColor: 'white'
+                                    }} onChangeText={(text) => {
+                                        this.formUpdate({subtitle: text})
+                                    }} value={this.state.question.subtitle}/>
+                                </View>
+                                {this.state.subtitle === "" &&
+                                <FormValidationMessage>Subtitle is required</FormValidationMessage>}
+                            </View>
+                        </View>
+                    </View>
 
-                    <FormLabel>Description</FormLabel>
-                    <FormInput  onChangeText={text=>(
-                        this.formUpdate({description:text})
-                    )} value={this.state.question.description}/>
-                    {this.state.description==="" && <FormValidationMessage>Description is required</FormValidationMessage>}
+                    <View style={{padding: 15, marginBottom: 0}}>
+                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
+                            <TextInput editable={false} style={{color: "#fff"}}>Description</TextInput>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={{flex: 6}}>
+                                    <TextInput style={{
+                                        height: 40,
+                                        borderColor: 'black',
+                                        borderWidth: 1,
+                                        backgroundColor: 'white'
+                                    }} onChangeText={(text) => {
+                                        this.formUpdate({description: text})
+                                    }} value={this.state.question.description}/>
+                                </View>
+                                {this.state.description === "" &&
+                                <FormValidationMessage>Description is required</FormValidationMessage>}
+                            </View>
+                        </View>
+                    </View>
 
-                    <FormLabel>Points</FormLabel>
-                    <FormInput onChangeText={text=>(
-                        this.formUpdate({points:text})
-                    )} value={this.state.points.toString()}/>
-                    {this.state.points==="" &&<FormValidationMessage>Points are required</FormValidationMessage>}
+                    {no = this.state.question.points}
+                    { no=''+no}
+
+                    <View style={{padding: 15, marginBottom: 0}}>
+                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
+                            <TextInput editable={false} style={{color: "#fff"}}>Points</TextInput>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={{flex: 6}}>
+                                    <TextInput style={{
+                                        height: 40,
+                                        borderColor: 'black',
+                                        borderWidth: 1,
+                                        backgroundColor: 'white'
+                                    }} onChangeText={(text) => {
+                                        this.formUpdate({points: text})
+                                    }} value={no}/>
+                                </View>
+                                {this.state.points === "" &&
+                                <FormValidationMessage>Points are required</FormValidationMessage>}
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{padding: 15, marginBottom: 0}}>
+                        <View style={{flex: 1, backgroundColor: 'grey', padding: 11, marginBottom: 2}}>
+                            <TextInput editable={false} style={{color: "#fff"}}>Enter Question of form x + y = [four=4]</TextInput>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={{flex: 6}}>
+                                    <TextInput style={{
+                                        height: 40,
+                                        borderColor: 'black',
+                                        borderWidth: 1,
+                                        backgroundColor: 'white'
+                                    }} onChangeText={text=>(
+                                        this.parseQuestion(text)
+                                    )} value={this.state.fib}/>
+                                </View>
+                                {this.state.fib === "" &&
+                                <FormValidationMessage>Question is required</FormValidationMessage>}
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View style={{flex: 2}}>
+                            <Icon name={'save'} size={40} color="green"
+                                  onPress={() => this.updateQuestion()}
+                                  type='entypo'/>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Icon name={'cancel'} size={40} color="red"
+                                  onPress={() => this.props.navigation.goBack()}
+                                  type='materialicon'/>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Icon name={'slideshow'} size={40} color="blue"
+                                  onPress={() => {
+                                      this.setState({previewMode: !this.state.previewMode})
+                                  }}
+                                  type='materialicon'/>
+                        </View>
+
+                    </View>
 
 
-                    <FormLabel>Enter Question of form x + y = [four=4]</FormLabel>
-                    <FormInput onChangeText={text=>(
-                        this.parseQuestion(text)
-                    )} value={this.state.fib}/>
-                    {this.state.fib==="" &&<FormValidationMessage>Question is required</FormValidationMessage>}
-
-
-                    <Text>{'\n'}</Text>
-                    <Button title="Save" backgroundColor="green"
-                            color="white" onPress={()=>this.updateQuestion()}/>
-                    <Text>{'\n'}</Text>
-
-                    <Button title="Cancel" backgroundColor="red"
-                            color="white" onPress={()=>this.props.navigation.goBack()}/>
-
-                    <Text>{'\n'}</Text>
-                    <Button title="preview" backgroundColor="blue"
-                            color="white" onPress={()=>{
-                        this.setState({previewMode:!this.state.previewMode})
-                    }}/>
                 </ScrollView>}
 
                 {!this.state.previewMode &&
-                <View>
-                    <Text h3>{this.state.title}</Text>
-                    <Text>{'\n'}</Text>
-                    <Text h4>{this.state.subtitle}</Text>
-                    <Text>{'\n'}</Text>
-                    <Text h4>Description:</Text>
-                    <Text>{this.state.description}</Text>
-                    <Text>{'\n'}</Text>
-                    <Text h4>Points - {this.state.points}</Text>
-                    <Text>{'\n'}</Text>
+                <View style={{padding:5}}>
+                    <View style={{flex: 1, flexDirection: 'row',backgroundColor:'grey',padding:10,marginBottom:5}}>
+                        <View style={{flex: 4}}>
+                            <Text h4 style={{color:"#fff"}}>{this.state.title}</Text>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Text h4 style={{color:"#fff"}}>Points - {this.state.points}</Text>
+                        </View>
+                    </View>
+                    <View style={{backgroundColor:'grey',padding:10,marginBottom:5}}>
+                        <Text h4 style={{color:"#fff"}}>Description:</Text>
+                        <Text style={{color:"#fff"}}>{this.state.description}</Text>
+                    </View>
+
+                    <View style={{backgroundColor:'grey',padding:10,marginBottom:5}}>
+                        <Text h4 style={{color:"#fff"}}>Question:</Text>
+                        <Text style={{color:"#fff"}}>{this.state.fib}</Text>
+                    </View>
+
 
                     {this.state.parsed.split('-').map((str,index)=>{
                         return(
                             <View key={index}>
-                                {str==="#" && <TextInput  style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>}
+                                {str==="#" && <TextInput  style={{height: 40,width:160, borderColor: 'black', borderWidth: 1}}/>}
                                 {str!=="#" && <TextInput value={str} editable={false}/>}
                             </View>
                         )
@@ -153,15 +247,24 @@ class FillInTheBlankWidget extends React.Component{
 
                     }
 
-                    <Text>{'\n'}</Text>
-                    <Button title="Submit" backgroundColor="blue" color="white"/>
-                    <Button title="Cancel" backgroundColor="red" color="white"/>
-                    <Text>{'\n'}</Text>
-                    <Button title="EditMode" backgroundColor="blue"
-                            color="white" onPress={()=>{
-                        this.setState({previewMode:!this.state.previewMode})
-                    }}/>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View style={{flex: 2}}>
+                            <Icon name={'check'} size={40} color="green"
+                                  type='entypo'/>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Icon name={'cancel'} size={40} color="red"
+                                  type='materialicon'/>
+                        </View>
+                        <View style={{flex: 2}}>
+                            <Icon name={'back'} size={40} color="blue"
+                                  onPress={() => {
+                                      this.setState({previewMode: !this.state.previewMode})}}
+                                  type='entypo'/>
+                        </View>
+                    </View>
                 </View>}
+
 
             </ScrollView>
                 )

@@ -18,7 +18,7 @@ class MultipleChoiceService{
             subtitle:'Multiple Choice',
             questionType:'MC',
             options:'option-1#option-2',
-            correctOption:'1'
+            correctOption:'0'
         }
 
         return fetch("http://localhost:8080/api/exam/"+examId+"/choice",{

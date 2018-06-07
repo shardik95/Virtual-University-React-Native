@@ -5,7 +5,7 @@ import AssignmentService from "../services/AssignmentService";
 import ExamService from "../services/ExamService";
 import {styles} from "../App";
 
-class LessonList extends React.Component{
+class WidgetList extends React.Component{
 
     static navigationOptions={
         title:"Widgets",
@@ -197,7 +197,7 @@ class LessonList extends React.Component{
                             <View style={{flex:5}}>
                                 <TextInput style={{height: 40, borderColor: 'black', borderWidth: 1,backgroundColor:'white'}} onChangeText={(text)=>{
                                     this.setState({examTitle:text})
-                                }}/>
+                                }} placeholder="Enter exam name"/>
                             </View>
                             <View style={{flex:1,paddingTop:10}}>
                                 <Icon
@@ -215,4 +215,4 @@ class LessonList extends React.Component{
     }
 }
 
-export default LessonList;
+export default WidgetList;

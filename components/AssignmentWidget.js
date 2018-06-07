@@ -98,7 +98,7 @@ class AssignmentWidget extends React.Component{
                                         this.formUpdate({description: text})
                                     }} value={this.state.assignment.description}/>
                                 </View>
-                                {this.state.title === "" &&
+                                {this.state.description === "" &&
                                 <FormValidationMessage>Description is required</FormValidationMessage>}
                             </View>
                         </View>
